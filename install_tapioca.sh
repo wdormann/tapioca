@@ -997,7 +997,12 @@ echo "Setting default icon set to gnome..."
 xfconf-query -c xsettings -p /Net/IconThemeName -s "gnome"
 
 # Install system-wide config files
-sudo cp ~/tapioca/sysctl.conf /etc/
+if [ -d "/etc/sysctl.d" ]; then
+  sudo cp ~/tapioca/sysctl.conf /etc/sysctl.d
+else
+  sudo cp ~/tapioca/sysctl.conf /etc/
+fi
+
 if [ -d /etc/dhcp ]; then
     sudo cp ~/tapioca/dhcpd.conf /etc/dhcp/
 fi
