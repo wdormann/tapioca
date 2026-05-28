@@ -74,6 +74,13 @@ if [ "$PWD" != "/home/tapioca/tapioca" ]; then
     exit 1
 fi
 
+if [ ! -f /etc/sudoers ]; then
+  #some distros don't come with /etc/sudoers
+  if [ -f /usr/etc/sudoers ]; then
+    sudo cp /usr/etc/sudoers /etc && sudo chmod 0400 /etc/sudoers
+  fi
+fi
+
 root_privs=$(grep tapioca /etc/sudoers 2>/dev/null)
 
 if [ -n "$root_privs" ] || [ "$user_id" == "root" ]; then
